@@ -1,2 +1,3 @@
 wagtail
 psycopg2-binary
+django-environ

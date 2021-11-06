@@ -1,0 +1,42 @@
+# Used for provisioning local dev environment
+version: '3.4'
+
+x-environment: &common-environment
+  USE_DOCKER: "yes"
+  DJANGO_SETTINGS_MODULE: league_manager.settings
+  DJANGO_SECRET_KEY: not_so_secret
+  DJANGO_DEFAULT_FILE_STORAGE: django.core.files.storage.FileSystemStorage
+  POSTGRES_HOST: postgres
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: debug
+  POSTGRES_USER: debug
+  POSTGRES_PASSWORD: debug
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/local/Dockerfile
+    image: league_manager_local
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    environment:
+      <<: *common-environment
+      PORT: 8000
+      HOST: 0.0.0.0
+    ports:
+      - "8000:8000"
+    command: /start.sh
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: debug
+      POSTGRES_USER: debug
+      POSTGRES_PASSWORD: debug
+    ports:
+      - "6666:5432"
