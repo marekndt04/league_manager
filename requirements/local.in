@@ -1,0 +1,4 @@
+-r test.in
+
+pip-tools
+django-debug-toolbar
