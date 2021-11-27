@@ -5,7 +5,9 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 COPY ./requirements/local.txt /app/
-RUN pip install --no-cache-dir -r local.txt
+RUN apt-get update && \
+    pip install --upgrade pip && \
+    pip install --no-cache-dir -r local.txt
 
 COPY ./docker/local/start.sh /start.sh
 RUN chmod +x /start.sh

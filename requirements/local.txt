@@ -58,6 +58,10 @@ l18n==2020.6.1
     # via wagtail
 mccabe==0.6.1
     # via flake8
+mypy==0.910
+    # via -r requirements/base.in
+mypy-extensions==0.4.3
+    # via mypy
 openpyxl==3.0.9
     # via tablib
 packaging==21.2
@@ -110,11 +114,15 @@ tablib[xls,xlsx]==3.1.0
 telepath==0.2
     # via wagtail
 toml==0.10.2
-    # via pytest
+    # via
+    #   mypy
+    #   pytest
 tomli==1.2.2
     # via
     #   coverage
     #   pep517
+typing-extensions==3.10.0.2
+    # via mypy
 urllib3==1.26.7
     # via requests
 wagtail==2.15

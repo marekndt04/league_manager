@@ -3,7 +3,7 @@ version: '3.4'
 
 x-environment: &common-environment
   USE_DOCKER: "yes"
-  DJANGO_SETTINGS_MODULE: league_manager.settings
+  DJANGO_SETTINGS_MODULE: league_manager.settings.development
   DJANGO_SECRET_KEY: not_so_secret
   DJANGO_DEFAULT_FILE_STORAGE: django.core.files.storage.FileSystemStorage
   POSTGRES_HOST: postgres
