@@ -1,0 +1,4 @@
+ignore = D203
+exclude =
+    .git,
+    __pycache__,

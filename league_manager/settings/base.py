@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'taggit',
     
     # local application
+    'apps.seasons',
+
     # third party packages
 ]
 
