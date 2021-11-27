@@ -12,3 +12,11 @@ migrate:
 
 cli:
 	docker-compose run --rm web bash
+
+install_reqs:
+	pip install -r requirements/local.txt
+
+reqs:
+	pip-compile requirements/local.in
+	pip-compile requirements/production.in
+	pip-compile requirements/test.in
