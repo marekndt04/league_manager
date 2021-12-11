@@ -1,5 +1,8 @@
+build:
+	docker-compose build web
+
 runserver:
-	docker-compose run --rm web ./manage.py runserver
+	docker-compose run --rm --service-ports web
 
 super_user:
 	docker-compose run --rm web ./manage.py createsuperuser

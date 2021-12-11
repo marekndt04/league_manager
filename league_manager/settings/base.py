@@ -26,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-59$h#1$d@z+0sgl3jc*b$fwp=wlug$o_s4gg=3ks5_g28!-g(z'
+SECRET_KEY = env.str('SECRET_KEY', default='not-so-secret')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default='*')
 
 
 # Application definition
@@ -57,10 +57,8 @@ INSTALLED_APPS = [
     'wagtail.core',
     'modelcluster',
     'taggit',
-    
     # local application
     'apps.seasons',
-
     # third party packages
 ]
 
@@ -104,9 +102,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'HOST': env.str('POSTGRES_HOST', default=''),
         'NAME': env.str('POSTGRES_DB', default=''),
-        'PASSWORD': env.str('POSTGRES_PASSWORD', default=''),
-        'PORT': env.str('POSTGRES_PORT', default=5432) ,
+        'PORT': env.str('POSTGRES_PORT', default=5432),
         'USER': env.str('POSTGRES_USER', default=''),
+        'PASSWORD': env.str('POSTGRES_PASSWORD', default=''),
     }
 }
 

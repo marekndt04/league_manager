@@ -5,7 +5,6 @@ x-environment: &common-environment
   USE_DOCKER: "yes"
   DJANGO_SETTINGS_MODULE: league_manager.settings.development
   DJANGO_SECRET_KEY: not_so_secret
-  DJANGO_DEFAULT_FILE_STORAGE: django.core.files.storage.FileSystemStorage
   POSTGRES_HOST: postgres
   POSTGRES_PORT: 5432
   POSTGRES_DB: debug
@@ -31,7 +30,7 @@ services:
     command: /start.sh
 
   postgres:
-    image: postgres
+    image: postgres:13-alpine
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
