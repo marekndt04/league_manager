@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: league-manager-service
+  labels:
+    app: league-manager
+spec:
+  selector:
+    app: league-manager
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  type: LoadBalancer

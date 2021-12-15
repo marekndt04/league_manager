@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: django-secrets
+type: Opaque
+data:
+  SECRET_KEY: 'eWV2XjVsbnUzNnQ1LWRrN3p2aStwNyUtaD1qNyM4aDl1cW5hcGktMC4yLjMudGFyLmd6YWMmZGx2Cg=='

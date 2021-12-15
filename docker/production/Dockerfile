@@ -3,6 +3,7 @@ FROM python:3.9-slim-buster
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
+COPY . /app/
 
 RUN apt-get update \
   # Python packages dependencies
@@ -16,10 +17,9 @@ RUN apt-get update \
 COPY ./requirements /requirements
 RUN apt-get update && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir -r /requirements/production.txt \
-    && rm -rf /requirements
+    pip install --no-cache-dir -r /requirements/production.txt
 
 
-COPY ./docker/production/start.sh /start.sh
-RUN sed -i 's/\r$//g' /start.sh
-RUN chmod +x /start.sh
+COPY ./docker/production/start.sh ./start.sh
+RUN sed -i 's/\r$//g' ./start.sh
+RUN chmod +x ./start.sh
