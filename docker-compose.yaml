@@ -27,7 +27,7 @@ services:
       HOST: 0.0.0.0
     ports:
       - "8000:8000"
-    command: /start.sh
+    command: ./docker/local/start.sh
 
   postgres:
     image: postgres:13-alpine
