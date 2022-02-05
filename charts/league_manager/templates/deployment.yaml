@@ -22,9 +22,11 @@ spec:
           livenessProbe:
             httpGet:
               path: /admin/login/
-              port: 8000
+              port: {{ .Values.appPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 30
           ports:
-          - containerPort: 8000
+          - containerPort: {{ .Values.appPort }}
           env:
             - name: DJANGO_SETTINGS_MODULE
               value: {{ .Values.settingsFile }}
@@ -54,3 +56,18 @@ spec:
                   key: POSTGRES_PORT
             - name: POSTGRES_HOST
               value: postgres-service
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.serviceName }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  selector:
+    app: {{ .Values.appName }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.appPort }}
+    targetPort: {{ .Values.appPort }}
+  type: {{ .Values.serviceType }}
