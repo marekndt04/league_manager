@@ -16,6 +16,9 @@ migrate:
 cli:
 	docker-compose run --rm web bash
 
+shell:
+	docker-compose run web /bin/bash
+
 install_reqs:
 	pip install -r requirements/local.txt
 
