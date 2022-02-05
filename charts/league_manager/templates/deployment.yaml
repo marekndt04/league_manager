@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.containerName }}
+          imagePullPolicy: IfNotPresent
+          image: {{ .Values.imageName }}
+          command: ['./start.sh']
+          livenessProbe:
+            httpGet:
+              path: /admin/login/
+              port: 8000
+          ports:
+          - containerPort: 8000
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: {{ .Values.settingsFile }}
+
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-secrets
+                  key: SECRET_KEY
+
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: league-manager-config
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: league-manager-config
+                  key: POSTGRES_PASSWORD
+
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: league-manager-config
+                  key: POSTGRES_PORT
+            - name: POSTGRES_HOST
+              value: postgres-service
