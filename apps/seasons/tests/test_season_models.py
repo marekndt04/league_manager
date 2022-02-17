@@ -16,3 +16,8 @@ class TestSeasonModel(TestCase):
         db_instance = SeasonPage.objects.get(id=new_season.id)
 
         self.assertEqual(db_instance.title, new_season.title)
+
+    def test_string_repr_of_season_page(self):
+        new_season = SeasonPage(title='nice string', slug='nice-slug')
+
+        self.assertEqual(str(new_season), 'nice string')
