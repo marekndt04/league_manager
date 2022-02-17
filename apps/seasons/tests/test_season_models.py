@@ -1,0 +1,18 @@
+from django.test import TestCase
+from wagtail.core.models import Page
+
+from apps.seasons.models import SeasonPage
+
+
+class TestSeasonModel(TestCase):
+    def setUp(self):
+        self.root_page = Page.objects.get(slug='root')
+
+    def test_season_page_can_be_created(self):
+        new_season = SeasonPage(title='New Season', slug='new-season')
+        self.root_page.add_child(instance=new_season)
+        new_season.save()
+
+        db_instance = SeasonPage.objects.get(id=new_season.id)
+
+        self.assertEqual(db_instance.title, new_season.title)
