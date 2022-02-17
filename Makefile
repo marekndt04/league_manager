@@ -20,9 +20,9 @@ shell:
 	docker-compose run web /bin/bash
 
 install_reqs:
-	pip install -r requirements/local.txt
+	docker-compose run web pip install -r requirements/local.txt
 
 reqs:
-	pip-compile requirements/local.in
-	pip-compile requirements/production.in
-	pip-compile requirements/test.in
+	docker-compose run --rm web pip-compile requirements/local.in
+	docker-compose run --rm web pip-compile requirements/production.in
+	docker-compose run --rm web pip-compile requirements/test.in
