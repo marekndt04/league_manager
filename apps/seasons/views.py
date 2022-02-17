@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
 
-# Create your views here.
+from apps.seasons.models import SeasonPage
+
+
+class SeasonView(DetailView):
+    model = SeasonPage
+    template_name = 'seasons/seasonpage_detail.html'
