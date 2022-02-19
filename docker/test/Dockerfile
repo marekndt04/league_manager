@@ -16,9 +16,4 @@ RUN apt-get update \
 
 RUN apt-get update && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir -r ./requirements/production.txt
-
-
-COPY ./docker/production/start.sh ./start.sh
-RUN sed -i 's/\r$//g' ./start.sh
-RUN chmod +x ./start.sh
+    pip install --no-cache-dir -r ./requirements/test.txt
