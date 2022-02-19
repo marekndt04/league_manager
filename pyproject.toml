@@ -3,7 +3,14 @@ line-length = 100
 skip-string-normalization = true
 
 [tool.pytest.ini_options]
-addopts = "--cov=/apps/*"
+addopts = "--cov-config=.coveragerc --cov=apps/"
 filterwarnings = [
     "ignore::django.utils.deprecation.RemovedInDjango41Warning"
+]
+
+[tool.coverage.run]
+omit = [
+    "*/apps.py",
+    "*/migrations/*",
+    "*/__init__.py",
 ]
