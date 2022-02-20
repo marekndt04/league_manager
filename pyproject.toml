@@ -3,10 +3,16 @@ line-length = 100
 skip-string-normalization = true
 
 [tool.pytest.ini_options]
-addopts = "--cov-config=.coveragerc --cov=apps/ --ds=league_manager.settings.test"
+addopts = [
+    "--cov-config=.coveragerc",
+    "--cov=apps/",
+    "--cov-fail-under=100",
+    "--ds=league_manager.settings.test",
+]
 filterwarnings = [
     "ignore::django.utils.deprecation.RemovedInDjango41Warning"
 ]
+
 
 [tool.coverage.run]
 omit = [
