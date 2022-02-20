@@ -97,15 +97,11 @@ WSGI_APPLICATION = 'league_manager.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-print(env.str('POSTGRES_HOST'))
-print(env.str('POSTGRES_DB'))
-print(env.str('POSTGRES_PORT'))
-print(env.str('POSTGRES_USER'))
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': env.str('POSTGRES_HOST', default=''),
+        'HOST': env.str('POSTGRES_HOST', default='localhost'),
         'NAME': env.str('POSTGRES_DB', default=''),
         'PORT': env.str('POSTGRES_PORT', default=5432),
         'USER': env.str('POSTGRES_USER', default=''),

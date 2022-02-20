@@ -2,6 +2,12 @@ name: LM Django CI
 
 on: [push,pull_request]
 
+env:
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: test_db
+  POSTGRES_USER: postgres
+  POSTGRES_HOST: postgres
+
 jobs:
   build:
 
@@ -10,12 +16,17 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+          POSTGRES_HOST: $POSTGRES_HOST
+          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_NAME: $POSTGRES_DB
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
     strategy:
       max-parallel: 4
       matrix:
