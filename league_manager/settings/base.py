@@ -58,7 +58,9 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     # local application
+    'apps.cms_core',
     'apps.seasons',
+    'apps.teams',
     # third party packages
 ]
 
