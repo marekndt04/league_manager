@@ -2,5 +2,4 @@
 
 pytest-django
 pytest-cov
-pytest-flake8
 flake8
