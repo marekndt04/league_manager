@@ -42,7 +42,9 @@ draftjs-exporter==2.1.7
 et-xmlfile==1.1.0
     # via openpyxl
 flake8==4.0.1
-    # via -r requirements/test.in
+    # via
+    #   -r requirements/test.in
+    #   pytest-flake8
 html5lib==1.1
     # via wagtail
 idna==3.3
@@ -79,9 +81,12 @@ pytest==6.2.5
     # via
     #   pytest-cov
     #   pytest-django
+    #   pytest-flake8
 pytest-cov==3.0.0
     # via -r requirements/test.in
 pytest-django==4.4.0
+    # via -r requirements/test.in
+pytest-flake8==1.0.7
     # via -r requirements/test.in
 pytz==2021.3
     # via
