@@ -1,1 +1,28 @@
-<h1>{{ object.title }}</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="mx-auto" style="width: 200px;">
+        <h2>{{ object.title }}</h2>
+    </div>
+{% endblock %}
+
+{% block table %}
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Zespół</th>
+        <th scope="col">PKT</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in teams  %}
+            <tr>
+            <th scope="row">{{ i }}</th>
+            <td>{{ team.name }}</td>
+            <td>Impl pointd</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}
