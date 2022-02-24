@@ -12,3 +12,6 @@ class Team(models.Model):
     )
 
     panels = [FieldPanel('name'), ImageChooserPanel('image')]
+
+    def __str__(self):
+        return f'{self.name.title()}'
