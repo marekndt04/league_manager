@@ -1,4 +1,4 @@
 from django.urls import path
 from apps.seasons.views import SeasonView
 
-urlpatterns = [path('seasons/<int:pk>', SeasonView.as_view(), name='season-view')]
+urlpatterns = [path('', SeasonView.as_view(), name='season-view')]

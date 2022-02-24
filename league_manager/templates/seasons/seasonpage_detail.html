@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="mx-auto" style="width: 200px;">
-        <h2>{{ object.title }}</h2>
+        <h2>{{ object_list.title }}</h2>
     </div>
 {% endblock %}
 
@@ -18,9 +18,9 @@
     <tbody>
         {% for team in teams  %}
             <tr>
-            <th scope="row">{{ i }}</th>
-            <td>{{ team.name }}</td>
-            <td>Impl pointd</td>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ team }}</td>
+            <td>Impl points</td>
             </tr>
         {% endfor %}
     </tbody>
