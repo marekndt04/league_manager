@@ -2,7 +2,7 @@ build:
 	docker-compose build web
 
 runserver:
-	docker-compose run --rm --service-ports web
+	docker-compose run --rm --service-ports web ./manage.py runserver 0.0.0.0:8000
 
 tests:
 	docker-compose run --rm web pytest $(args)

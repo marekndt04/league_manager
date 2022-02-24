@@ -1,12 +1,13 @@
 from django.test import TestCase
 from wagtail.images import get_image_model
+from wagtail.images.models import Image
 
-from ..models import Team
+from apps.teams.models import Team
 
 
 class TestTeamModel(TestCase):
     def setUp(self):
-        self.test_image_1 = get_image_model()
+        self.test_image_1 = Image.objects.create(title='New Image', file=get_image_model())
 
     def test_smth(self):
         new_team = Team.objects.create(name='new team', image=self.test_image_1)
