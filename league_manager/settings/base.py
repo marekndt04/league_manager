@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wagtail.contrib.forms',
+    'wagtail.contrib.modeladmin',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
     'wagtail.sites',
@@ -58,7 +59,9 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     # local application
+    'apps.cms_core',
     'apps.seasons',
+    'apps.teams',
     # third party packages
 ]
 
