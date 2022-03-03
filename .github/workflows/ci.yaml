@@ -8,7 +8,7 @@ env:
   POSTGRES_USER: postgres
 
 jobs:
-  build:
+  run-tests:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -43,8 +43,14 @@ jobs:
       run: |
         pytest
 
+on:
+  push:
+    branches:
+      - master
+jobs:
   push_to_registry:
-    needs: build
+    if: github.event.pull_request.merged == 'true'
+    needs: run-tests
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
