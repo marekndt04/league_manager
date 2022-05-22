@@ -25,6 +25,6 @@ install_reqs:
 	docker-compose run web pip install -r requirements/local.txt
 
 reqs:
-	docker-compose run --rm web pip-compile requirements/local.in
-	docker-compose run --rm web pip-compile requirements/production.in
-	docker-compose run --rm web pip-compile requirements/test.in
+	docker-compose run --rm web pip-compile --upgrade requirements/local.in
+	docker-compose run --rm web pip-compile --upgrade requirements/production.in
+	docker-compose run --rm web pip-compile --upgrade requirements/test.in

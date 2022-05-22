@@ -1,6 +1,6 @@
 # Info and Goals
 
-    As a hockey enthusiast and also amateur player I was always very frustrated that any events like amateur leagues or cups doesn't have their own website where You can check statistics or standings. In city where a I live we have at least two leagues at this level of competition. Results are always publicated with delay on facebook or other websites in form of short summary. 
+    As a hockey enthusiast and also amateur player I was always very frustrated that any events like amateur leagues or cups doesn't have their own website where You can check statistics or standings. In city where a I live we have at least two leagues at this level of competition. Results are always publicated with delay on facebook or other websites in form of short summary.
 
     This short history brings the introduction where I decided to create simple league manager administrated by captains of teams from my city.
 

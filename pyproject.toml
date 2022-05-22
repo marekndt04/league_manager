@@ -12,6 +12,12 @@ addopts = [
 filterwarnings = [
     "ignore::django.utils.deprecation.RemovedInDjango41Warning"
 ]
+flake8-max-line-lenght = 100
+flake8-ignore = [
+    ".git ALL",
+    "__pycache__ ALL",
+    "**/settings/** ALL",
+]
 
 
 [tool.coverage.run]
