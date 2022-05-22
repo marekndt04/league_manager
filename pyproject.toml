@@ -10,7 +10,9 @@ addopts = [
     "--ds=league_manager.settings.test",
 ]
 filterwarnings = [
-    "ignore::django.utils.deprecation.RemovedInDjango41Warning"
+    "ignore::django.utils.deprecation.RemovedInDjango41Warning",
+    "ignore:The USE_L10N setting is deprecated:",
+    "ignore:ANTIALIAS is deprecated and will be removed in Pillow 10:",
 ]
 
 [tool.coverage.run]
@@ -18,4 +20,6 @@ omit = [
     "*/apps.py",
     "*/migrations/*",
     "*/__init__.py",
+    "*/tests/*",
+    "*/urls.py",
 ]
