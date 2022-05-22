@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load wagtailimages_tags %}
+
 
 {% block content %}
     <div class="mx-auto" style="width: 200px;">
@@ -19,7 +21,7 @@
         {% for team in teams  %}
             <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ team }}</td>
+            <td>{% image team.image fill-32x32 %} {{ team }} </td>
             <td>Impl points</td>
             </tr>
         {% endfor %}
