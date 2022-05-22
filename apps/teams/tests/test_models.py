@@ -24,4 +24,6 @@ class TestTeamModel(TestCase):
         self.assertEqual(str(db_model), 'New Team')
 
     def test_team_model_saves_icon_rendition(self):
-        pass
+        rendition = self.test_image.get_rendition('fill-32x32')
+
+        self.assertTrue(rendition)

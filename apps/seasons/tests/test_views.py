@@ -2,7 +2,7 @@ import http
 
 from django.test import TestCase
 from django.urls import reverse
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from apps.seasons.models import SeasonPage
 from apps.teams.models import Team

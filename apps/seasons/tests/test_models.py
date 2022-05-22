@@ -1,5 +1,5 @@
 from django.test import TestCase
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from apps.seasons.models import SeasonPage
 
