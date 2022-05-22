@@ -16,5 +16,6 @@ class Team(models.Model):
         return f'{self.name.title()}'
 
     def save(self, *args, **kwargs):
-        self.image.get_rendition('fill-32x32')
+        if self.image:
+            self.image.get_rendition('fill-32x32')
         super().save(*args, **kwargs)
