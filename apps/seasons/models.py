@@ -17,3 +17,7 @@ class Round(Page):
         FieldPanel('start_date'),
         FieldPanel('end_date'),
     ]
+
+
+class GamePage(Page):
+    parent_page_types = ['seasons.Round']
