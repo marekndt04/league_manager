@@ -2,13 +2,13 @@ from django.db.models import Prefetch
 from django.views.generic import ListView
 from wagtail.images import get_image_model
 
-from apps.seasons.models import SeasonPage
+from apps.seasons.models import Season
 from apps.teams.models import Team
 
 
 class SeasonView(ListView):
     template_name = 'seasons/seasonpage_detail.html'
-    queryset = SeasonPage.objects.last()
+    queryset = Season.objects.last()
 
     def get_context_data(self, **kwargs):
         renditions_queryset = (

@@ -3,12 +3,13 @@ from wagtail.models import Page
 from wagtail.admin.panels import FieldPanel
 
 
-class SeasonPage(Page):
+class Season(Page):
     subpage_types = ['seasons.Round']
 
 
 class Round(Page):
-    parent_page_types = ['seasons.SeasonPage']
+    parent_page_types = ['seasons.Season']
+    subpage_types = ['seasons.Game']
 
     start_date = models.DateField('Start Date')
     end_date = models.DateField('End Date')
@@ -19,5 +20,5 @@ class Round(Page):
     ]
 
 
-class GamePage(Page):
+class Game(Page):
     parent_page_types = ['seasons.Round']

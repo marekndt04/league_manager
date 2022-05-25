@@ -4,15 +4,15 @@ from django.test import TestCase
 from django.urls import reverse
 from wagtail.models import Page
 
-from apps.seasons.models import SeasonPage
+from apps.seasons.models import Season
 from apps.teams.models import Team
 
 
 class TestSeasonView(TestCase):
     def setUp(self):
         self.root_page = Page.objects.get(slug='root')
-        self.season_1 = SeasonPage(title='New Season', slug='new-season')
-        self.season_2 = SeasonPage(title='Newest Season', slug='newest-season')
+        self.season_1 = Season(title='New Season', slug='new-season')
+        self.season_2 = Season(title='Newest Season', slug='newest-season')
         self.root_page.add_child(instance=self.season_1)
         self.root_page.add_child(instance=self.season_2)
         self.season_1.save()
