@@ -2,7 +2,7 @@ import datetime
 from django.test import TestCase
 from wagtail.models import Page
 
-from apps.seasons.models import GamePage, Season, Round
+from apps.seasons.models import Game, Season, Round
 
 
 class TestSeasonModel(TestCase):
@@ -74,19 +74,19 @@ class TestGameModel(TestCase):
         self.round.save()
 
     def test_game_page_can_be_created(self):
-        new_game = GamePage(
+        new_game = Game(
             title='Game 1',
             slug='game-one',
         )
         self.round.add_child(instance=new_game)
         new_game.save()
 
-        db_instance = GamePage.objects.last()
+        db_instance = Game.objects.last()
 
         self.assertEqual(new_game, db_instance)
 
     def test_string_repr_of_game_page(self):
-        new_round = GamePage(
+        new_round = Game(
             title='Game 1',
             slug='game-one',
         )
