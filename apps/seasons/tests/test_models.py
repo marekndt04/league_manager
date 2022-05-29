@@ -1,8 +1,11 @@
 import datetime
+from django.forms import ValidationError
 from django.test import TestCase
 from wagtail.models import Page
 
 from apps.seasons.models import Game, Season, Round
+from apps.seasons.models.orderables import GameTeam
+from apps.teams.models import Team
 
 
 class TestSeasonModel(TestCase):
@@ -72,6 +75,8 @@ class TestGameModel(TestCase):
         )
         self.season.add_child(instance=self.round)
         self.round.save()
+        self.team_1 = Team.objects.create(name='Team 1')
+        self.team_2 = Team.objects.create(name='Team 2')
 
     def test_game_page_can_be_created(self):
         new_game = Game(
@@ -94,3 +99,61 @@ class TestGameModel(TestCase):
         new_round.save()
 
         self.assertEqual(str(new_round), 'Game 1')
+
+    def test_game_page_has_related_teams(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        new_game.save()
+        team_1 = Team.objects.create(name='Team 1')
+        team_2 = Team.objects.create(name='Team 2')
+        game_team_1 = GameTeam.objects.create(page=new_game, team=team_1, goals=3, host=True)
+        game_team_2 = GameTeam.objects.create(page=new_game, team=team_2, goals=2, host=False)
+
+        db_instance = Game.objects.last()
+
+        self.assertIn(game_team_1, db_instance.gameteam_set.all())
+        self.assertIn(game_team_2, db_instance.gameteam_set.all())
+
+    def test_game_page_cant_be_save_with_one_team(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        new_game.save()
+        game_team_1 = GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=True)
+        game_team_2 = GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=False)
+
+        db_instance = Game.objects.last()
+
+        self.assertIn(game_team_1, db_instance.gameteam_set.all())
+        self.assertIn(game_team_2, db_instance.gameteam_set.all())
+
+    def test_clean_model_raises_error_with_duplicated_teams(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        new_game.save()
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=True)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=2, host=False)
+
+        with self.assertRaises(ValidationError):
+            new_game.clean()
+
+    def test_clean_model_raises_error_with_duplicated_host_values(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        new_game.save()
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=True)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+
+        with self.assertRaises(ValidationError):
+            new_game.clean()
