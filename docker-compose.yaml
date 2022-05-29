@@ -17,6 +17,7 @@ services:
       context: .
       dockerfile: ./docker/local/Dockerfile
     image: league_manager_local
+    user: user-app
     depends_on:
       - postgres
     volumes:
