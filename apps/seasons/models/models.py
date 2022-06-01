@@ -38,3 +38,11 @@ class Game(Page):
             raise ValidationError('Teams can not be duplicated')
         if game_team_1.host and game_team_2.host:
             raise ValidationError('Host value can not be duplicated')
+
+
+class SeasonTeamPoints(models.Model):
+    season = models.ForeignKey('seasons.Season', on_delete=models.CASCADE)
+    team = models.ForeignKey('teams.Team', on_delete=models.CASCADE)
+    points = models.IntegerField(default=0)
+    goals_scored = models.IntegerField(default=0)
+    goals_lost = models.IntegerField(default=0)
