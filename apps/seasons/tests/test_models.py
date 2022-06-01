@@ -4,6 +4,7 @@ from django.test import TestCase
 from wagtail.models import Page
 
 from apps.seasons.models import Game, Season, Round
+from apps.seasons.models.models import SeasonTeamStandings
 from apps.seasons.models.orderables import GameTeam
 from apps.teams.models import Team
 
@@ -157,3 +158,82 @@ class TestGameModel(TestCase):
 
         with self.assertRaises(ValidationError):
             new_game.clean()
+
+    def test_game_model_saves_season_team_standings_instance_for_two_teams_only(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=False)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+        new_game.save()
+
+        db_instance_query = SeasonTeamStandings.objects.filter(season=self.season)
+
+        self.assertEqual(db_instance_query.count(), 2)
+
+    def test_game_model_saves_season_team_standings_instance(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=False)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+        new_game.save()
+
+        db_instance_1 = SeasonTeamStandings.objects.get(team=self.team_1, season=self.season)
+        db_instance_2 = SeasonTeamStandings.objects.get(team=self.team_2, season=self.season)
+
+        for idx, item in enumerate([db_instance_1, db_instance_2]):
+            self.assertEqual(item.season, self.season)
+            self.assertEqual(item.team, getattr(self, f'team_{idx+1}'))
+
+    def test_game_model_saves_season_team_standings_instance_with_correct_goals_scored(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=False)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+        new_game.save()
+
+        db_instance_1 = SeasonTeamStandings.objects.get(team=self.team_1, season=self.season)
+        db_instance_2 = SeasonTeamStandings.objects.get(team=self.team_2, season=self.season)
+
+        self.assertEqual(db_instance_1.goals_scored, 3)
+        self.assertEqual(db_instance_2.goals_scored, 2)
+
+    def test_game_model_saves_season_team_standings_instance_with_correct_goals_lost(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=False)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+        new_game.save()
+
+        db_instance_1 = SeasonTeamStandings.objects.get(team=self.team_1, season=self.season)
+        db_instance_2 = SeasonTeamStandings.objects.get(team=self.team_2, season=self.season)
+
+        self.assertEqual(db_instance_1.goals_scored, 2)
+        self.assertEqual(db_instance_2.goals_scored, 3)
+
+    def test_game_model_saves_season_team_standings_instance_with_correct_points(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=False)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+        new_game.save()
+
+        db_instance_1 = SeasonTeamStandings.objects.get(team=self.team_1, season=self.season)
+        db_instance_2 = SeasonTeamStandings.objects.get(team=self.team_2, season=self.season)
+
+        self.assertEqual(db_instance_1.points, 3)
+        self.assertEqual(db_instance_2.points, 0)

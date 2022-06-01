@@ -4,6 +4,14 @@ from wagtail.models import Page
 from wagtail.admin.panels import FieldPanel, InlinePanel
 
 
+class SeasonTeamStandings(models.Model):
+    season = models.ForeignKey('seasons.Season', on_delete=models.CASCADE)
+    team = models.ForeignKey('teams.Team', on_delete=models.CASCADE)
+    points = models.IntegerField(default=0)
+    goals_scored = models.IntegerField(default=0)
+    goals_lost = models.IntegerField(default=0)
+
+
 class Season(Page):
     subpage_types = ['seasons.Round']
 
@@ -39,10 +47,9 @@ class Game(Page):
         if game_team_1.host and game_team_2.host:
             raise ValidationError('Host value can not be duplicated')
 
-
-class SeasonTeamPoints(models.Model):
-    season = models.ForeignKey('seasons.Season', on_delete=models.CASCADE)
-    team = models.ForeignKey('teams.Team', on_delete=models.CASCADE)
-    points = models.IntegerField(default=0)
-    goals_scored = models.IntegerField(default=0)
-    goals_lost = models.IntegerField(default=0)
+    def save(self, clean=True, user=None, log_action=False, **kwargs):
+        season_page = self.get_ancestors().exact_type(Season)[0].specific
+        for team in self.gameteam_set.all():
+            print(len(self.gameteam_set.all()))
+            SeasonTeamStandings.objects.get_or_create(season=season_page, team=team.team)
+        return super().save(clean, user, log_action, **kwargs)
