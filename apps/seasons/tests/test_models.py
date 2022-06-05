@@ -219,8 +219,8 @@ class TestGameModel(TestCase):
         db_instance_1 = SeasonTeamStandings.objects.get(team=self.team_1, season=self.season)
         db_instance_2 = SeasonTeamStandings.objects.get(team=self.team_2, season=self.season)
 
-        self.assertEqual(db_instance_1.goals_scored, 2)
-        self.assertEqual(db_instance_2.goals_scored, 3)
+        self.assertEqual(db_instance_1.goals_lost, 2)
+        self.assertEqual(db_instance_2.goals_lost, 3)
 
     def test_game_model_saves_season_team_standings_instance_with_correct_points(self):
         new_game = Game(
@@ -237,3 +237,64 @@ class TestGameModel(TestCase):
 
         self.assertEqual(db_instance_1.points, 3)
         self.assertEqual(db_instance_2.points, 0)
+
+    def test_game_model_saves_season_team_standings_and_increments_points(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=False)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+        new_game.save()
+
+        another_game = Game(
+            title='Game 2',
+            slug='game-two',
+        )
+        self.round.add_child(instance=another_game)
+        GameTeam.objects.create(page=another_game, team=self.team_1, goals=1, host=False)
+        GameTeam.objects.create(page=another_game, team=self.team_2, goals=2, host=True)
+        another_game.save()
+
+        db_instance_1 = SeasonTeamStandings.objects.get(team=self.team_1, season=self.season)
+        db_instance_2 = SeasonTeamStandings.objects.get(team=self.team_2, season=self.season)
+
+        self.assertEqual(db_instance_1.points, 3)
+        self.assertEqual(db_instance_2.points, 3)
+
+    def test_game_model_saves_does_not_increment_points_if_already_exists(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=False)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+
+        new_game.save()
+        new_game.save()
+
+        db_instance_1 = SeasonTeamStandings.objects.get(team=self.team_1, season=self.season)
+        db_instance_2 = SeasonTeamStandings.objects.get(team=self.team_2, season=self.season)
+
+        self.assertEqual(db_instance_1.points, 3)
+        self.assertEqual(db_instance_2.points, 0)
+
+    def test_game_model_saves_does_not_increment_goals_if_already_exists(self):
+        new_game = Game(
+            title='Game 1',
+            slug='game-one',
+        )
+        self.round.add_child(instance=new_game)
+        GameTeam.objects.create(page=new_game, team=self.team_1, goals=3, host=False)
+        GameTeam.objects.create(page=new_game, team=self.team_2, goals=2, host=True)
+
+        new_game.save()
+        new_game.save()
+
+        db_instance_1 = SeasonTeamStandings.objects.get(team=self.team_1, season=self.season)
+        db_instance_2 = SeasonTeamStandings.objects.get(team=self.team_2, season=self.season)
+
+        self.assertEqual(db_instance_1.goals_scored, 3)
+        self.assertEqual(db_instance_2.goals_scored, 2)
