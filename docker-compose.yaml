@@ -17,6 +17,7 @@ services:
       context: .
       dockerfile: ./docker/local/Dockerfile
     image: league_manager_local
+    user: user-app
     depends_on:
       - postgres
     volumes:
@@ -27,9 +28,11 @@ services:
       HOST: 0.0.0.0
     ports:
       - "8000:8000"
+    command:
+      ./docker/local/start.sh
 
   postgres:
-    image: postgres:13-alpine
+    image: postgres:14-alpine
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432

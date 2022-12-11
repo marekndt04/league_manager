@@ -8,7 +8,7 @@ from apps.teams.models import Team
 
 class SeasonView(ListView):
     template_name = 'seasons/seasonpage_detail.html'
-    queryset = Season.objects.last()
+    queryset = Season.objects.all()
 
     def get_context_data(self, **kwargs):
         renditions_queryset = (

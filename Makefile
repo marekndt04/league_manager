@@ -6,6 +6,7 @@ runserver:
 
 tests:
 	docker-compose run --rm web pytest $(args)
+
 super_user:
 	docker-compose run --rm web ./manage.py createsuperuser
 
