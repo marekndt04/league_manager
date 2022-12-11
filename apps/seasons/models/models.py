@@ -6,16 +6,16 @@ from wagtail.admin.panels import FieldPanel, InlinePanel
 from apps.seasons.models.orderables import GameTeam
 
 
+class Season(Page):
+    subpage_types = ['seasons.Round']
+
+
 class SeasonTeamStandings(models.Model):
     season = models.ForeignKey('seasons.Season', on_delete=models.CASCADE)
     team = models.ForeignKey('teams.Team', on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
     goals_scored = models.IntegerField(default=0)
     goals_lost = models.IntegerField(default=0)
-
-
-class Season(Page):
-    subpage_types = ['seasons.Round']
 
 
 class Round(Page):
@@ -50,7 +50,6 @@ class Game(Page):
             raise ValidationError('Host value can not be duplicated')
 
     def save(self, clean=True, user=None, log_action=False, **kwargs):
-        print('how many save')
         season_page = self.get_ancestors().exact_type(Season)[0].specific
         game_team_query = self.gameteam_set.all()
 
